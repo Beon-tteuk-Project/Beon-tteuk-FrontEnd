@@ -1,0 +1,35 @@
+.header {
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+}
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo::before {
+  content: "⚡";
+  font-size: 32px;
+}
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+}
+.nav-btn {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  color: white;
+  cursor: pointer;
+}
+.nav-btn:hover {
+  transform: translateY(-2px);
+}
