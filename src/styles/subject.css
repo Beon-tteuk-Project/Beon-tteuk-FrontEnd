@@ -1,0 +1,64 @@
+.subject-list-wrapper {
+  background-color: #e0f2f7; /* Light sea blue background */
+  padding: 30px;
+  border-radius: 12px;
+  margin-top: 40px; /* Add space above this section */
+}
+
+.subject-list-container h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.add-subject-btn {
+  background-color: var(--primary-color);
+  color: white;
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+.add-subject-btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.add-subject-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.add-subject-container h3 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.subject-item {
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subject-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.subject-info h4 {
+  margin: 0 0 5px 0;
+  color: var(--text-color);
+}
+
+.subject-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
