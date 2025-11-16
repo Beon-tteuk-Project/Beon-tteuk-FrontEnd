@@ -1,13 +1,32 @@
 .subject-list-wrapper {
-  background-color: #e0f2f7; /* Light sea blue background */
+  background-color: var(--container-bg);
   padding: 30px;
-  border-radius: 12px;
-  margin-top: 40px; /* Add space above this section */
+  border-radius: 0;
+  margin-top: 20px;
 }
 
-.subject-list-container h2 {
-  color: var(--primary-color);
+.subject-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+  gap: 20px;
+}
+
+.subject-header h2 {
+  color: var(--primary-color);
+  margin: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sort-select {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 0;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  cursor: pointer;
 }
 
 .add-subject-btn {
@@ -17,6 +36,7 @@
   padding: 12px;
   font-size: 1.1rem;
   margin-top: 10px;
+  border: none;
 }
 
 .add-subject-btn:hover {
@@ -35,16 +55,29 @@
   margin-bottom: 10px;
 }
 
+.add-subject-container label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--text-color);
+}
+
+.add-subject-container textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
 .subject-item {
   padding: 20px;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 0;
   margin-bottom: 15px;
   cursor: pointer;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: var(--container-bg);
 }
 
 .subject-item:hover {
@@ -60,5 +93,11 @@
 .subject-info p {
   margin: 0;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.subject-desc {
+  font-style: italic;
+  margin-top: 5px !important;
 }

@@ -7,9 +7,21 @@
   --background-color: #f0f8ff;
   --text-color: #333;
   --container-bg: #ffffff;
+  --input-bg: #ffffff;
   --border-color: #dee2e6;
   --error-color: #e74c3c;
   --success-color: #2ecc71;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  --primary-color: #00b4d8;
+  --secondary-color: #0096c7;
+  --background-color: #1a1a1a;
+  --text-color: #f0f0f0;
+  --container-bg: #2d2d2d;
+  --input-bg: #3a3a3a;
+  --border-color: #444;
 }
 
 body {
@@ -19,17 +31,12 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-.app-root {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 button {
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 0;
   padding: 10px 15px;
   font-size: 1rem;
   font-weight: 600;
@@ -37,18 +44,28 @@ button {
   border: 1px solid transparent;
 }
 
-input, select {
-  border-radius: 8px;
+input, select, textarea {
+  border-radius: 0;
   border: 1px solid var(--border-color);
   padding: 10px;
   font-size: 1rem;
   width: 100%;
   box-sizing: border-box;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .main-container {
   background-color: var(--container-bg);
   padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.3s;
+}
+
+.app-root {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
 }

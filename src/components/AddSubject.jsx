@@ -5,9 +5,16 @@ export default function AddSubject({ onAdd }) {
   const [subjectName, setSubjectName] = useState("");
   const [importance, setImportance] = useState(1);
   const [examDate, setExamDate] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSubmit = () => {
-    onAdd({ name: subjectName, importance, date: examDate });
+    onAdd({
+      name: subjectName,
+      importance,
+      date: examDate,
+      description,
+      createdAt: new Date().toISOString()
+    });
   };
 
   return (
@@ -38,6 +45,15 @@ export default function AddSubject({ onAdd }) {
           type="date"
           value={examDate}
           onChange={(e) => setExamDate(e.target.value)}
+        />
+      </label>
+      <label>
+        과목 설명:
+        <textarea
+          placeholder="예: 이 과목 재수강 과목이야"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          rows="3"
         />
       </label>
       <label>

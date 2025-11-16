@@ -12,13 +12,13 @@
 }
 
 .modal-content {
-  background-color: white;
+  background-color: var(--container-bg);
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   position: relative;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
 }
 
 .modal-close {
