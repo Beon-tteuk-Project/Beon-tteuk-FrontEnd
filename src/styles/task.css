@@ -4,17 +4,18 @@
 }
 
 .back-btn {
-  background-color: #6c757d;
-  color: white;
-  border: none;
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
   padding: 10px 20px;
   border-radius: 0;
   cursor: pointer;
   margin-bottom: 20px;
+  transition: all 0.3s ease;
 }
 
 .back-btn:hover {
-  background-color: #5a6268;
+  background-color: var(--container-bg);
 }
 
 .task-header {
@@ -22,7 +23,7 @@
 }
 
 .task-header h2 {
-  color: var(--primary-color);
+  color: #000000;
   margin-bottom: 10px;
 }
 
@@ -33,7 +34,7 @@
 }
 
 .task-list h3 {
-  color: var(--primary-color);
+  color: #000000;
   margin-bottom: 20px;
 }
 
@@ -81,7 +82,7 @@
 }
 
 .task-detail-header h2 {
-  color: var(--primary-color);
+  color: #000000;
   margin-bottom: 10px;
 }
 
@@ -96,7 +97,7 @@
 }
 
 .task-section h3 {
-  color: var(--primary-color);
+  color: #000000;
   margin-bottom: 15px;
 }
 
@@ -111,7 +112,7 @@
 
 .generate-problem-btn {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--text-on-primary);
   border: none;
   padding: 15px 30px;
   border-radius: 0;
@@ -121,7 +122,8 @@
 }
 
 .generate-problem-btn:hover {
-  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .problem-history-list {

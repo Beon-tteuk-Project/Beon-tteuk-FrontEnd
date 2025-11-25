@@ -18,7 +18,7 @@
 }
 
 .profile-header h2 {
-  color: var(--primary-color);
+  color: #000000;
   margin: 0;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .profile-section h3 {
-  color: var(--primary-color);
+  color: #000000;
   margin-top: 0;
   margin-bottom: 20px;
   font-size: 1.2rem;
@@ -64,8 +64,8 @@
 }
 
 .edit-btn {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: #0077b6;
+  color: white; /* 흰색 글씨로 변경 */
   border: none;
   padding: 10px 20px;
   border-radius: 0;
@@ -74,7 +74,8 @@
 }
 
 .edit-btn:hover {
-  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .password-change-form {
@@ -102,16 +103,22 @@
   border: none;
   border-radius: 0;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .button-group button:first-child {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--text-on-primary);
 }
 
 .button-group button:last-child {
-  background-color: #6c757d;
-  color: white;
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.button-group button:last-child:hover {
+  background-color: var(--container-bg);
 }
 
 .profile-actions {
