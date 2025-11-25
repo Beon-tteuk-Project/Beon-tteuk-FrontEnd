@@ -13,13 +13,18 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 로컬 스토리지에서 사용자 정보 확인
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-      setIsAuthenticated(true);
+    try {
+      // 로컬 스토리지에서 사용자 정보 확인
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
+        setIsAuthenticated(true);
+      }
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -40,6 +45,10 @@ export const AuthProvider = ({ children }) => {
     setUser(newUser);
     localStorage.setItem('user', JSON.stringify(newUser));
   };
+
+  if (loading) {
+    return null; // 로딩 중에는 아무것도 렌더링하지 않음
+  }
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, login, logout, updateUser }}>
