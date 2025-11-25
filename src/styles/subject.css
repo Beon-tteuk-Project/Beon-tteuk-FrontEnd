@@ -14,7 +14,7 @@
 }
 
 .subject-header h2 {
-  color: var(--primary-color);
+  color: #000000;
   margin: 0;
   white-space: nowrap;
   flex-shrink: 0;
@@ -31,7 +31,7 @@
 
 .add-subject-btn {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--text-on-primary);
   width: 100%;
   padding: 12px;
   font-size: 1.1rem;
@@ -40,7 +40,8 @@
 }
 
 .add-subject-btn:hover {
-  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .add-subject-container {
@@ -51,7 +52,7 @@
 
 .add-subject-container h3 {
   text-align: center;
-  color: var(--primary-color);
+  color: #000000;
   margin-bottom: 10px;
 }
 

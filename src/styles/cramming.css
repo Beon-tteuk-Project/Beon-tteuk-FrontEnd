@@ -3,18 +3,18 @@
   text-align: center;
   margin: 40px 0;
   padding: 30px;
-  background: linear-gradient(135deg, #ffa366 0%, #ffb380 100%);
+  background: var(--primary-color);
   border-radius: 0;
-  box-shadow: 0 4px 15px rgba(255, 163, 102, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .cramming-btn-large {
-  background-color: white;
-  color: #ff8c5a;
+  background-color: var(--container-bg);
+  color: #000000; /* 글자색 검은색으로 변경 */
   font-size: 1.5rem;
   font-weight: 700;
   padding: 20px 50px;
-  border: none;
+  border: 1px solid var(--primary-color);
   border-radius: 0;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -24,11 +24,10 @@
 .cramming-btn-large:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  background-color: #fff5f2;
 }
 
 .cramming-hint {
-  color: white;
+  color: var(--text-on-primary);
   margin-top: 15px;
   font-size: 1rem;
   opacity: 0.95;
@@ -50,14 +49,15 @@
 .cramming-header {
   text-align: center;
   padding: 40px 20px;
-  background: linear-gradient(135deg, #ffa366 0%, #ffb380 100%);
+  background: var(--primary-color);
   border-radius: 0;
-  color: white;
+  color: var(--text-on-primary);
 }
 
 .cramming-header h1 {
   font-size: 3rem;
   margin: 0 0 15px 0;
+  color: #000000;
 }
 
 .cramming-subtitle {
@@ -88,8 +88,8 @@
 }
 
 .mode-card.highlight {
-  border-color: #ffa366;
-  background: linear-gradient(135deg, rgba(255, 163, 102, 0.05) 0%, rgba(255, 179, 128, 0.05) 100%);
+  border-color: var(--primary-color);
+  background: none;
 }
 
 .mode-card h3 {
@@ -115,15 +115,16 @@
   width: 40px;
   height: 40px;
   line-height: 40px;
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--border-color);
+  color: var(--text-color);
   border-radius: 50%;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
 .mode-card.highlight .step-number {
-  background-color: #ffa366;
+  background-color: var(--primary-color);
+  color: var(--text-on-primary);
 }
 
 .mode-step p {
@@ -158,7 +159,7 @@
   text-align: center;
   font-size: 1.8rem;
   margin: 0 0 30px 0;
-  color: var(--primary-color);
+  color: #000000;
 }
 
 .feature-grid {
@@ -219,7 +220,7 @@
   display: block;
   font-size: 3.5rem;
   font-weight: 700;
-  color: #ffa366;
+  color: #000000;
   margin-bottom: 10px;
 }
 
@@ -239,8 +240,8 @@
 }
 
 .start-cramming-btn {
-  background: linear-gradient(135deg, #ffa366 0%, #ffb380 100%);
-  color: white;
+  background: var(--primary-color);
+  color: var(--text-on-primary);
   font-size: 1.3rem;
   font-weight: 700;
   padding: 18px 45px;
@@ -248,27 +249,28 @@
   border-radius: 0;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 163, 102, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .start-cramming-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 163, 102, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .back-home-btn {
-  background-color: #6c757d;
-  color: white;
+  background-color: transparent;
+  color: var(--text-color);
   font-size: 1.1rem;
   padding: 18px 35px;
-  border: none;
+  border: 1px solid var(--border-color);
   border-radius: 0;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .back-home-btn:hover {
-  background-color: #5a6268;
+  background-color: var(--container-bg);
+  border-color: var(--primary-color);
 }
 
 /* Progress Page */
@@ -281,14 +283,15 @@
   text-align: center;
   margin-bottom: 40px;
   padding: 30px;
-  background: linear-gradient(135deg, #ffa366 0%, #ffb380 100%);
+  background: var(--primary-color);
   border-radius: 0;
-  color: white;
+  color: var(--text-on-primary);
 }
 
 .progress-header h2 {
   font-size: 2rem;
   margin: 0 0 10px 0;
+  color: #000000;
 }
 
 .progress-header p {
@@ -315,20 +318,20 @@
 }
 
 .timeline-item.active {
-  border-color: #ffa366;
-  box-shadow: 0 4px 15px rgba(255, 163, 102, 0.2);
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .timeline-item.completed {
-  opacity: 0.6;
-  border-color: var(--success-color);
+  opacity: 0.7;
+  border-left: 5px solid var(--success-color);
 }
 
 .timeline-marker {
   width: 50px;
   height: 50px;
   background-color: var(--border-color);
-  color: white;
+  color: var(--text-color);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -339,12 +342,14 @@
 }
 
 .timeline-item.active .timeline-marker {
-  background: linear-gradient(135deg, #ffa366 0%, #ffb380 100%);
+  background: var(--primary-color);
+  color: var(--text-on-primary);
   animation: pulse 2s ease-in-out infinite;
 }
 
 .timeline-item.completed .timeline-marker {
   background-color: var(--success-color);
+  color: white;
 }
 
 @keyframes pulse {
@@ -363,7 +368,7 @@
 .timeline-content h4 {
   font-size: 1.3rem;
   margin: 0 0 10px 0;
-  color: var(--text-color);
+  color: #000000;
 }
 
 .timeline-content p {
@@ -374,8 +379,8 @@
 }
 
 .study-now-btn {
-  background-color: #ffa366;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-on-primary);
   padding: 12px 25px;
   border: none;
   border-radius: 0;
@@ -387,8 +392,8 @@
 }
 
 .study-now-btn:hover {
-  background-color: #ff8c5a;
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .progress-footer {
@@ -397,15 +402,15 @@
 }
 
 .progress-footer .back-btn {
-  background-color: #6c757d;
-  color: white;
+  background-color: transparent;
+  color: var(--text-color);
   padding: 12px 30px;
-  border: none;
+  border: 1px solid var(--border-color);
   border-radius: 0;
   cursor: pointer;
   font-size: 1rem;
 }
 
 .progress-footer .back-btn:hover {
-  background-color: #5a6268;
+  background-color: var(--container-bg);
 }

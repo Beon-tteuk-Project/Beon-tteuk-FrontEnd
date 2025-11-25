@@ -2,26 +2,29 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 :root {
-  --primary-color: #0077b6;
-  --secondary-color: #00b4d8;
-  --background-color: #f0f8ff;
-  --text-color: #333;
-  --container-bg: #ffffff;
+  /* New Color Palette */
+  --primary-color: rgb(163, 204, 163);   /* Soft Green */
+  --secondary-color: rgb(143, 184, 143);  /* Darker Soft Green for hover/accent */
+  --background-color: rgb(214, 230, 245); /* Pale Blue */
+  --text-color: #2c3e50;                 /* Soft Black */
+  --text-on-primary: #000000;            /* Text for on top of primary color */
+  --container-bg: #ffffff;             /* Keep containers white for clarity */
   --input-bg: #ffffff;
-  --border-color: #dee2e6;
+  --border-color: rgb(195, 210, 225);   /* Lighter, softer border */
   --error-color: #e74c3c;
   --success-color: #2ecc71;
 }
 
-/* Dark Mode */
+/* Dark Mode using the new palette */
 body.dark-mode {
-  --primary-color: #00b4d8;
-  --secondary-color: #0096c7;
-  --background-color: #1a1a1a;
-  --text-color: #f0f0f0;
-  --container-bg: #2d2d2d;
-  --input-bg: #3a3a3a;
-  --border-color: #444;
+  --primary-color: rgb(163, 204, 163);
+  --secondary-color: rgb(143, 184, 143);
+  --background-color: #2c3e50; /* Dark Slate Blue */
+  --text-color: #ecf0f1;
+  --text-on-primary: #000000; /* Text for on top of primary color */
+  --container-bg: #34495e; /* Lighter Slate Blue */
+  --input-bg: #34495e;
+  --border-color: #4a6278;
 }
 
 body {
