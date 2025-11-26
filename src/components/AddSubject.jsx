@@ -6,13 +6,14 @@ export default function AddSubject({ onAdd }) {
   const [examDate, setExamDate] = useState("");
   const [description, setDescription] = useState("");
   
-  // 1. 파일 상태 추가
-  const [file, setFile] = useState(null); 
+  // 1. 여러 파일을 다루도록 files 상태로 변경
+  const [files, setFiles] = useState([]); 
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
 
   const handleFileChange = (e) => {
+    // 2. 선택된 모든 파일을 상태에 저장
     if (e.target.files) {
-      setFile(e.target.files[0]);
+      setFiles(e.target.files);
     }
   };
 
@@ -24,39 +25,39 @@ export default function AddSubject({ onAdd }) {
 
     setIsLoading(true); // 로딩 시작
 
-    // 2. 서버로 보낼 데이터 폼 생성
     const formData = new FormData();
     formData.append("name", subjectName);
     formData.append("importance", importance);
     formData.append("date", examDate);
     formData.append("description", description);
-    if (file) {
-      formData.append("file", file);
+    
+    // 3. 모든 파일을 FormData에 추가
+    if (files.length > 0) {
+      for (const file of files) {
+        formData.append("files", file); // key를 "files"로 변경
+      }
     }
 
     try {
-      // 3. Python Flask 서버로 요청 (포트 5000 가정)
       const response = await fetch("http://localhost:5000/api/add-subject", {
         method: "POST",
-        body: formData, // 헤더에 Content-Type 설정 불필요 (브라우저가 자동 설정)
+        body: formData, 
       });
 
       const result = await response.json();
 
       if (result.status === "success") {
-        // 4. 성공 시 부모 컴포넌트에 결과 전달
-        // result.data에는 Gemini가 분석한 JSON 텍스트가 들어있을 거야.
         onAdd({
+          id: crypto.randomUUID(), // 고유 ID 생성
           name: subjectName,
           importance,
           date: examDate,
           description,
-          aiAnalysis: result.data, // AI 분석 결과 포함
+          aiAnalysis: result.data, 
           createdAt: new Date().toISOString(),
         });
         
         alert("과목 분석이 완료되었습니다! 🔥");
-        // 입력창 초기화 로직은 필요시 추가
       } else {
         alert("오류 발생: " + result.message);
       }
@@ -108,12 +109,11 @@ export default function AddSubject({ onAdd }) {
         />
       </label>
       <label>
-        PDF/필기 내용:
-        {/* 파일 핸들러 연결 */}
-        <input type="file" onChange={handleFileChange} accept=".pdf,.jpg,.png,.txt" />
+        PDF/필기 내용 (다중 선택 가능):
+        {/* 4. multiple 속성 추가 */}
+        <input type="file" multiple onChange={handleFileChange} accept=".pdf,.jpg,.png,.txt" />
       </label>
       
-      {/* 로딩 중이면 버튼 비활성화 */}
       <button onClick={handleSubmit} disabled={isLoading}>
         {isLoading ? "AI 분석 중..." : "추가"}
       </button>
