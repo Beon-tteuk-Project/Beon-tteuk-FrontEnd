@@ -55,6 +55,14 @@ export default function App() {
               }
             />
             <Route
+              path="/subjects/:subjectId"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/task/:subjectId/:taskId"
               element={
                 <ProtectedRoute>
