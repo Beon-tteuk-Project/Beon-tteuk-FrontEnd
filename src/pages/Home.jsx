@@ -71,6 +71,18 @@ export default function Home() {
     setIsModalOpen(false);
   };
 
+  const handleDeleteSubject = (id, e) => {
+    e.stopPropagation(); // 부모 요소의 onClick 이벤트 방지
+    if (window.confirm("정말로 이 과목을 삭제하시겠습니까?")) {
+      const updatedSubjects = subjects.filter((s) => s.id !== id);
+      setSubjects(updatedSubjects);
+      // 만약 선택된 과목이 삭제되면, 선택 상태도 초기화
+      if (selectedSubject && selectedSubject.id === id) {
+        setSelectedSubject(null);
+      }
+    }
+  };
+
   const calculateDday = (date) => {
     const today = new Date();
     const examDate = new Date(date);
@@ -141,6 +153,12 @@ export default function Home() {
                 className="subject-item"
                 onClick={() => setSelectedSubject(s)}
               >
+                <button
+                  className="delete-btn"
+                  onClick={(e) => handleDeleteSubject(s.id, e)}
+                >
+                  삭제
+                </button>
                 <div className="subject-info">
                   <h4>{s.name}</h4>
                   {/* AI 요약이 있으면 그걸 보여주고, 없으면 사용자 설명 보여줌 */}
