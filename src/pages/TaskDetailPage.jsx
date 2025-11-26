@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function TaskDetailPage() {
   const { subjectId, taskId } = useParams();
   const navigate = useNavigate();
+  const [subjects, setSubjects] = useState([]);
+  const [currentTask, setCurrentTask] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [problemHistory, setProblemHistory] = useState([
     {
       id: 1,
@@ -21,13 +24,27 @@ export default function TaskDetailPage() {
     }
   ]);
 
-  // 테스트용 Task 데이터
-  const task = {
-    id: taskId,
-    title: "1장: 기본 개념 이해",
-    description: "이 Task에서는 기본적인 개념을 학습합니다. 주요 개념들을 숙지하고, 실전 문제를 통해 이해도를 높이세요.",
-    subject: "수학",
-  };
+  useEffect(() => {
+    const savedSubjects = localStorage.getItem('subjects');
+    if (savedSubjects) {
+      const parsedSubjects = JSON.parse(savedSubjects);
+      setSubjects(parsedSubjects);
+
+      // 현재 subjectId에 해당하는 과목 찾기
+      const foundSubject = parsedSubjects.find(
+        (sub) => String(sub.id) === String(subjectId)
+      );
+
+      if (foundSubject && foundSubject.tasks) {
+        // 현재 taskId에 해당하는 Task 찾기
+        const foundTask = foundSubject.tasks.find(
+          (t) => String(t.task_id) === String(taskId)
+        );
+        setCurrentTask(foundTask);
+      }
+    }
+    setLoading(false);
+  }, [subjectId, taskId]);
 
   const handleGenerateProblem = () => {
     navigate(`/problem/generate/${subjectId}/${taskId}`);
@@ -37,20 +54,35 @@ export default function TaskDetailPage() {
     navigate(`/problem/${problemId}`);
   };
 
+  if (loading) {
+    return <div className="task-detail-container">로딩 중...</div>;
+  }
+
+  if (!currentTask) {
+    return (
+      <div className="task-detail-container">
+        <p>Task를 찾을 수 없습니다.</p>
+        <button className="back-btn" onClick={() => navigate("/")}>
+          &lt; 홈으로 돌아가기
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="task-detail-container">
-      <button className="back-btn" onClick={() => navigate("/")}>
-        &lt; 과목 목록으로
+      <button className="back-btn" onClick={() => navigate(-1)}>
+        &lt; 뒤로 가기
       </button>
 
       <div className="task-detail-header">
-        <h2>{task.title}</h2>
-        <p className="task-subject">{task.subject}</p>
+        <h2>{currentTask.title}</h2>
+        <p className="task-subject">{currentTask.subject}</p>
       </div>
 
       <div className="task-section">
         <h3>Task 설명</h3>
-        <p className="task-description">{task.description}</p>
+        <p className="task-description">{currentTask.summary}</p>
       </div>
 
       <div className="task-section">
