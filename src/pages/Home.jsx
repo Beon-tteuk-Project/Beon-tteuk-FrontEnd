@@ -55,11 +55,12 @@ export default function Home() {
   const handleAddSubject = (subject) => {
     const aiData = extractJsonFromResponse(subject.aiAnalysis);
     const tasks = aiData ? aiData.tasks : [];
-    const aiSummary = aiData ? aiData.exam_summary : "AI 분석에 실패했거나 요약 정보가 없습니다.";
+    const aiSummary = aiData ? aiData.subject_summary : "AI 분석에 실패했거나 요약 정보가 없습니다.";
     const newSubject = {
       ...subject,
       id: Date.now(),
       priority: 1,
+      tag_name: aiData ? aiData.tag_name : null,
       tasks: tasks,
       aiSummary: aiSummary,
       totalEstimatedHours: aiData ? aiData.total_estimated_hours : 0,
