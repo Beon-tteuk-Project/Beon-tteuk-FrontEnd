@@ -160,27 +160,29 @@ export default function Home() {
 
   // Task 목록 뷰
   const renderTaskList = () => (
-    <div className="task-list-container">
-      <button className="back-btn" onClick={() => navigate("/")}>
-        &lt; 과목 목록으로
-      </button>
-      <div className="task-header">
-        <h2>{selectedSubject.name}</h2>
-        <div style={{ background: "#f0f8ff", padding: "15px", borderRadius: "8px", marginTop: "10px" }}>
-          <strong>🤖 AI 과목 분석:</strong>
-          <p style={{ marginTop: "5px", whiteSpace: "pre-wrap" }}>
-            {selectedSubject.aiSummary || selectedSubject.description}
-          </p>
-          {selectedSubject.totalEstimatedHours > 0 && (
-            <p style={{ fontSize: "0.9em", color: "#666", marginTop: "5px" }}>
-              ⏱️ 총 예상 학습 시간: {selectedSubject.totalEstimatedHours}시간
+    <div className="task-list-wrapper">
+      <div className="task-list-container">
+        <button className="back-btn" onClick={() => navigate("/")}>
+          &lt; 과목 목록으로
+        </button>
+        <div className="task-header">
+          <h2>{selectedSubject.name}</h2>
+          <div style={{ background: "#f0f8ff", padding: "15px", borderRadius: "8px", marginTop: "10px" }}>
+            <strong>🤖 AI 과목 분석:</strong>
+            <p style={{ marginTop: "5px", whiteSpace: "pre-wrap" }}>
+              {selectedSubject.aiSummary || selectedSubject.description}
             </p>
-          )}
+            {selectedSubject.totalEstimatedHours > 0 && (
+              <p style={{ fontSize: "0.9em", color: "#666", marginTop: "5px" }}>
+                ⏱️ 총 예상 학습 시간: {selectedSubject.totalEstimatedHours}시간
+              </p>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="task-list">
-        <h3>학습 Task ({selectedSubject.tasks ? selectedSubject.tasks.length : 0})</h3>
-        {renderTasks()}
+        <div className="task-list">
+          <h3>학습 Task ({selectedSubject.tasks ? selectedSubject.tasks.length : 0})</h3>
+          {renderTasks()}
+        </div>
       </div>
     </div>
   );

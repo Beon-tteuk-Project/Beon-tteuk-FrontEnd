@@ -35,11 +35,12 @@ export default function CrammingPage() {
   };
 
   const renderIntro = () => (
-    <div className="cramming-intro">
-      <div className="cramming-header">
-        <h1>⚡ 벼락치기 모드</h1>
-        <p className="cramming-subtitle">시간이 부족할 때, AI가 당신을 위한 최적의 학습 계획을 세워드립니다</p>
-      </div>
+    <div className="cramming-wrapper">
+      <div className="cramming-intro">
+        <div className="cramming-header">
+          <h1>⚡ 벼락치기 모드</h1>
+          <p className="cramming-subtitle">시간이 부족할 때, AI가 당신을 위한 최적의 학습 계획을 세워드립니다</p>
+        </div>
 
       <div className="cramming-comparison">
         <div className="mode-card">
@@ -130,15 +131,17 @@ export default function CrammingPage() {
           홈으로 돌아가기
         </button>
       </div>
+      </div>
     </div>
   );
 
   const renderCrammingProgress = () => (
-    <div className="cramming-progress">
-      <div className="progress-header">
-        <h2>벼락치기 모드 진행 중</h2>
-        <p>AI가 생성한 학습 순서를 따라가세요</p>
-      </div>
+    <div className="cramming-wrapper">
+      <div className="cramming-progress">
+        <div className="progress-header">
+          <h2>벼락치기 모드 진행 중</h2>
+          <p>AI가 생성한 학습 순서를 따라가세요</p>
+        </div>
 
       <div className="progress-timeline">
         {subjects
@@ -171,6 +174,7 @@ export default function CrammingPage() {
         <button className="back-btn" onClick={() => setIsStarted(false)}>
           처음으로
         </button>
+      </div>
       </div>
     </div>
   );
