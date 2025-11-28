@@ -58,53 +58,55 @@ export default function ProblemGeneratePage() {
   };
 
   return (
-    <div className="problem-generate-container">
-      <button className="back-btn" onClick={() => navigate(`/task/${subjectId}/${taskId}`)}>
-        &lt; Task로 돌아가기
-      </button>
+    <div className="problem-generate-wrapper">
+      <div className="problem-generate-container">
+        <button className="back-btn" onClick={() => navigate(`/task/${subjectId}/${taskId}`)}>
+          &lt; Task로 돌아가기
+        </button>
 
-      <div className="problem-header">
-        <h2>문제 생성</h2>
-      </div>
-
-      {problems.length === 0 ? (
-        <div className="generate-section">
-          <p>AI가 우선순위에 맞는 문제를 생성합니다.</p>
-          <button
-            className="generate-btn"
-            onClick={handleGenerate}
-            disabled={isGenerating}
-          >
-            {isGenerating ? "생성 중..." : "문제 생성하기"}
-          </button>
+        <div className="problem-header">
+          <h2>문제 생성</h2>
         </div>
-      ) : (
-        <div className="problem-list">
-          {problems.map((problem, index) => (
-            <div key={problem.id} className="problem-item">
-              <h3>문제 {index + 1}</h3>
-              <p className="question">{problem.question}</p>
-              <div className="options">
-                {problem.options.map((option, optIndex) => (
-                  <label key={optIndex} className="option-label">
-                    <input
-                      type="radio"
-                      name={`problem-${problem.id}`}
-                      value={option}
-                      checked={answers[problem.id] === option}
-                      onChange={() => handleAnswerSelect(problem.id, option)}
-                    />
-                    {option}
-                  </label>
-                ))}
+
+        {problems.length === 0 ? (
+          <div className="generate-section">
+            <p>AI가 우선순위에 맞는 문제를 생성합니다.</p>
+            <button
+              className="generate-btn"
+              onClick={handleGenerate}
+              disabled={isGenerating}
+            >
+              {isGenerating ? "생성 중..." : "문제 생성하기"}
+            </button>
+          </div>
+        ) : (
+          <div className="problem-list">
+            {problems.map((problem, index) => (
+              <div key={problem.id} className="problem-item">
+                <h3>문제 {index + 1}</h3>
+                <p className="question">{problem.question}</p>
+                <div className="options">
+                  {problem.options.map((option, optIndex) => (
+                    <label key={optIndex} className="option-label">
+                      <input
+                        type="radio"
+                        name={`problem-${problem.id}`}
+                        value={option}
+                        checked={answers[problem.id] === option}
+                        onChange={() => handleAnswerSelect(problem.id, option)}
+                      />
+                      {option}
+                    </label>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-          <button className="submit-btn" onClick={handleSubmit}>
-            제출하기
-          </button>
-        </div>
-      )}
+            ))}
+            <button className="submit-btn" onClick={handleSubmit}>
+              제출하기
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
