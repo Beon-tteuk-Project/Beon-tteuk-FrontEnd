@@ -4,10 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 export default function TaskDetailPage() {
   const { subjectId, taskId } = useParams();
   const navigate = useNavigate();
-  const [subjects, setSubjects] = useState([]);
   const [currentTask, setCurrentTask] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [problemHistory, setProblemHistory] = useState([
+  const [problemHistory] = useState([
     {
       id: 1,
       createdAt: "2025-01-10",
@@ -28,7 +27,6 @@ export default function TaskDetailPage() {
     const savedSubjects = localStorage.getItem('subjects');
     if (savedSubjects) {
       const parsedSubjects = JSON.parse(savedSubjects);
-      setSubjects(parsedSubjects);
 
       // 현재 subjectId에 해당하는 과목 찾기
       const foundSubject = parsedSubjects.find(
