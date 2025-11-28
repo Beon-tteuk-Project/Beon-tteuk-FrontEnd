@@ -2,14 +2,29 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 :root {
-  --primary-color: #0077b6;
-  --secondary-color: #00b4d8;
-  --background-color: #f0f8ff;
-  --text-color: #333;
-  --container-bg: #ffffff;
-  --border-color: #dee2e6;
+  /* New Color Palette */
+  --primary-color: rgb(163, 204, 163);   /* Soft Green */
+  --secondary-color: rgb(143, 184, 143);  /* Darker Soft Green for hover/accent */
+  --background-color: rgb(214, 230, 245); /* Pale Blue */
+  --text-color: #2c3e50;                 /* Soft Black */
+  --text-on-primary: #000000;            /* Text for on top of primary color */
+  --container-bg: #ffffff;             /* Keep containers white for clarity */
+  --input-bg: #ffffff;
+  --border-color: rgb(195, 210, 225);   /* Lighter, softer border */
   --error-color: #e74c3c;
   --success-color: #2ecc71;
+}
+
+/* Dark Mode using the new palette */
+body.dark-mode {
+  --primary-color: rgb(163, 204, 163);
+  --secondary-color: rgb(143, 184, 143);
+  --background-color: #2c3e50; /* Dark Slate Blue */
+  --text-color: #ecf0f1;
+  --text-on-primary: #000000; /* Text for on top of primary color */
+  --container-bg: #34495e; /* Lighter Slate Blue */
+  --input-bg: #34495e;
+  --border-color: #4a6278;
 }
 
 body {
@@ -19,17 +34,12 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-.app-root {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 button {
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 0;
   padding: 10px 15px;
   font-size: 1rem;
   font-weight: 600;
@@ -37,18 +47,28 @@ button {
   border: 1px solid transparent;
 }
 
-input, select {
-  border-radius: 8px;
+input, select, textarea {
+  border-radius: 0;
   border: 1px solid var(--border-color);
   padding: 10px;
   font-size: 1rem;
   width: 100%;
   box-sizing: border-box;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .main-container {
   background-color: var(--container-bg);
   padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.3s;
+}
+
+.app-root {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
 }
