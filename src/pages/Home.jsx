@@ -55,11 +55,12 @@ export default function Home() {
   const handleAddSubject = (subject) => {
     const aiData = extractJsonFromResponse(subject.aiAnalysis);
     const tasks = aiData ? aiData.tasks : [];
-    const aiSummary = aiData ? aiData.exam_summary : "AI 분석에 실패했거나 요약 정보가 없습니다.";
+    const aiSummary = aiData ? aiData.subject_summary : "AI 분석에 실패했거나 요약 정보가 없습니다.";
     const newSubject = {
       ...subject,
       id: Date.now(),
       priority: 1,
+      tag_name: aiData ? aiData.tag_name : null,
       tasks: tasks,
       aiSummary: aiSummary,
       totalEstimatedHours: aiData ? aiData.total_estimated_hours : 0,
@@ -162,27 +163,29 @@ export default function Home() {
 
   // Task 목록 뷰
   const renderTaskList = () => (
-    <div className="task-list-container">
-      <button className="back-btn" onClick={() => navigate("/")}>
-        &lt; 과목 목록으로
-      </button>
-      <div className="task-header">
-        <h2>{selectedSubject.name}</h2>
-        <div style={{ background: "#f0f8ff", padding: "15px", borderRadius: "8px", marginTop: "10px" }}>
-          <strong>🤖 AI 과목 분석:</strong>
-          <p style={{ marginTop: "5px", whiteSpace: "pre-wrap" }}>
-            {selectedSubject.aiSummary || selectedSubject.description}
-          </p>
-          {selectedSubject.totalEstimatedHours > 0 && (
-            <p style={{ fontSize: "0.9em", color: "#666", marginTop: "5px" }}>
-              ⏱️ 총 예상 학습 시간: {selectedSubject.totalEstimatedHours}시간
+    <div className="task-list-wrapper">
+      <div className="task-list-container">
+        <button className="back-btn" onClick={() => navigate("/")}>
+          &lt; 과목 목록으로
+        </button>
+        <div className="task-header">
+          <h2>{selectedSubject.name}</h2>
+          <div style={{ background: "#f0f8ff", padding: "15px", borderRadius: "8px", marginTop: "10px" }}>
+            <strong>🤖 AI 과목 분석:</strong>
+            <p style={{ marginTop: "5px", whiteSpace: "pre-wrap" }}>
+              {selectedSubject.aiSummary || selectedSubject.description}
             </p>
-          )}
+            {selectedSubject.totalEstimatedHours > 0 && (
+              <p style={{ fontSize: "0.9em", color: "#666", marginTop: "5px" }}>
+                ⏱️ 총 예상 학습 시간: {selectedSubject.totalEstimatedHours}시간
+              </p>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="task-list">
-        <h3>학습 Task ({selectedSubject.tasks ? selectedSubject.tasks.length : 0})</h3>
-        {renderTasks()}
+        <div className="task-list">
+          <h3>학습 Task ({selectedSubject.tasks ? selectedSubject.tasks.length : 0})</h3>
+          {renderTasks()}
+        </div>
       </div>
     </div>
   );
