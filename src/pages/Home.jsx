@@ -16,10 +16,28 @@ export default function Home() {
     const savedSubjects = localStorage.getItem("subjects");
     if (savedSubjects) {
       const parsedSubjects = JSON.parse(savedSubjects);
-      setSubjects(parsedSubjects);
+
+      // 기존 데이터에 task_id가 없는 경우 추가 (마이그레이션)
+      const migratedSubjects = parsedSubjects.map(subject => {
+        if (subject.tasks && subject.tasks.length > 0) {
+          const migratedTasks = subject.tasks.map(task => {
+            if (!task.task_id) {
+              return {
+                ...task,
+                task_id: task.study_order || task.task_tag_name
+              };
+            }
+            return task;
+          });
+          return { ...subject, tasks: migratedTasks };
+        }
+        return subject;
+      });
+
+      setSubjects(migratedSubjects);
 
       if (subjectId) {
-        const foundSubject = parsedSubjects.find(s => String(s.id) === subjectId);
+        const foundSubject = migratedSubjects.find(s => String(s.id) === subjectId);
         setSelectedSubject(foundSubject || null);
       } else {
         setSelectedSubject(null);
@@ -54,7 +72,12 @@ export default function Home() {
 
   const handleAddSubject = (subject) => {
     const aiData = extractJsonFromResponse(subject.aiAnalysis);
-    const tasks = aiData ? aiData.tasks : [];
+    const rawTasks = aiData ? aiData.tasks : [];
+    // 각 task에 task_id 추가 (study_order를 task_id로 사용)
+    const tasks = rawTasks.map((task) => ({
+      ...task,
+      task_id: task.study_order || task.task_tag_name // study_order 또는 task_tag_name을 task_id로 사용
+    }));
     const aiSummary = aiData ? aiData.subject_summary : "AI 분석에 실패했거나 요약 정보가 없습니다.";
     const newSubject = {
       ...subject,

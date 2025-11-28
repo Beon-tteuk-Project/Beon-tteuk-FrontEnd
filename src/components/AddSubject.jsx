@@ -5,9 +5,9 @@ export default function AddSubject({ onAdd }) {
   const [importance, setImportance] = useState(1);
   const [examDate, setExamDate] = useState("");
   const [description, setDescription] = useState("");
-  
+
   // 1. 여러 파일을 다루도록 files 상태로 변경
-  const [files, setFiles] = useState([]); 
+  const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
 
   const handleFileChange = (e) => {
@@ -30,7 +30,7 @@ export default function AddSubject({ onAdd }) {
     formData.append("importance", importance);
     formData.append("date", examDate);
     formData.append("description", description);
-    
+
     // 3. 모든 파일을 FormData에 추가
     if (files.length > 0) {
       for (const file of files) {
@@ -39,9 +39,9 @@ export default function AddSubject({ onAdd }) {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/add-subject", {
+      const response = await fetch("http://localhost:5000/api/ai/add-subject", {
         method: "POST",
-        body: formData, 
+        body: formData,
       });
 
       const result = await response.json();
@@ -53,10 +53,10 @@ export default function AddSubject({ onAdd }) {
           importance,
           date: examDate,
           description,
-          aiAnalysis: result.data, 
+          aiAnalysis: result.data,
           createdAt: new Date().toISOString(),
         });
-        
+
         alert("과목 분석이 완료되었습니다! 🔥");
       } else {
         alert("오류 발생: " + result.message);
@@ -111,9 +111,14 @@ export default function AddSubject({ onAdd }) {
       <label>
         PDF/필기 내용 (다중 선택 가능):
         {/* 4. multiple 속성 추가 */}
-        <input type="file" multiple onChange={handleFileChange} accept=".pdf,.jpg,.png,.txt" />
+        <input
+          type="file"
+          multiple
+          onChange={handleFileChange}
+          accept=".pdf,.jpg,.png,.txt"
+        />
       </label>
-      
+
       <button onClick={handleSubmit} disabled={isLoading}>
         {isLoading ? "AI 분석 중..." : "추가"}
       </button>

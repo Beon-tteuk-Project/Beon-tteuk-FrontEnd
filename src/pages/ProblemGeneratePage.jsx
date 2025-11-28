@@ -9,7 +9,7 @@ export default function ProblemGeneratePage() {
   const [answers, setAnswers] = useState({});
   const [taskInfo, setTaskInfo] = useState(null);
 
-  // 1. 컴포넌트 로드 시 localStorage에서 태그 정보(tag_name) 가져오기
+  // 1. 컴포넌트 로드 시 localStorage에서 태그 정보(task_tag_name) 가져오기
   useEffect(() => {
     const savedSubjects = localStorage.getItem("subjects");
     if (savedSubjects) {
@@ -33,7 +33,10 @@ export default function ProblemGeneratePage() {
       const endIndex = text.indexOf(endMarker);
 
       if (startIndex !== -1 && endIndex !== -1) {
-        const jsonString = text.substring(startIndex + startMarker.length, endIndex);
+        const jsonString = text.substring(
+          startIndex + startMarker.length,
+          endIndex
+        );
         return JSON.parse(jsonString);
       }
       return null;
@@ -45,8 +48,8 @@ export default function ProblemGeneratePage() {
 
   // 3. 문제 생성 핸들러 (API 호출)
   const handleGenerate = async () => {
-    if (!taskInfo || !taskInfo.tag_name) {
-      alert("태스크 정보를 찾을 수 없습니다. (tag_name 누락)");
+    if (!taskInfo || !taskInfo.task_tag_name) {
+      alert("태스크 정보를 찾을 수 없습니다. (task_tag_name 누락)");
       return;
     }
 
@@ -54,15 +57,18 @@ export default function ProblemGeneratePage() {
     setProblems([]); // 기존 문제 초기화
 
     try {
-      const response = await fetch("http://localhost:5000/api/generate-questions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          tag_name: taskInfo.tag_name, // 백엔드로 태그 전달
-        }),
-      });
+      const response = await fetch(
+        "http://127.0.0.1:5000/api/generate-questions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            tag_name: taskInfo.task_tag_name, // 백엔드로 태그 전달
+          }),
+        }
+      );
 
       const result = await response.json();
 
@@ -77,9 +83,9 @@ export default function ProblemGeneratePage() {
             // 예: {"1": "A", "2": "B"} -> ["A", "B"]
             const sortedKeys = Object.keys(q.options).sort();
             const optionsArray = sortedKeys.map((key) => q.options[key]);
-            
+
             // 정답 번호를 이용해 정답 텍스트 찾기
-            const correctText = q.options[q.correct_answer]; 
+            const correctText = q.options[q.correct_answer];
 
             return {
               id: index + 1,
@@ -121,15 +127,15 @@ export default function ProblemGeneratePage() {
     });
 
     const score = Math.round((correctCount / problems.length) * 100);
-    
+
     // 결과 메시지 구성
     let resultMsg = `결과: ${correctCount}/${problems.length} 정답 (${score}점)\n\n`;
-    
+
     // 틀린 문제 해설 추가 (선택 사항)
     problems.forEach((p) => {
-        if (answers[p.id] !== p.correctAnswer) {
-            resultMsg += `[문제 ${p.id}] 오답! (정답: ${p.correctAnswer})\n해설: ${p.explanation}\n\n`;
-        }
+      if (answers[p.id] !== p.correctAnswer) {
+        resultMsg += `[문제 ${p.id}] 오답! (정답: ${p.correctAnswer})\n해설: ${p.explanation}\n\n`;
+      }
     });
 
     alert(resultMsg);
@@ -139,24 +145,43 @@ export default function ProblemGeneratePage() {
   };
 
   return (
-    <div className="problem-generate-container" style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
-      <button 
-        className="back-btn" 
+    <div
+      className="problem-generate-container"
+      style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}
+    >
+      <button
+        className="back-btn"
         onClick={() => navigate(`/task/${subjectId}/${taskId}`)}
         style={{ marginBottom: "20px", padding: "8px 16px", cursor: "pointer" }}
       >
         &lt; Task로 돌아가기
       </button>
 
-      <div className="problem-header" style={{ marginBottom: "30px", borderBottom: "2px solid #eee", paddingBottom: "10px" }}>
+      <div
+        className="problem-header"
+        style={{
+          marginBottom: "30px",
+          borderBottom: "2px solid #eee",
+          paddingBottom: "10px",
+        }}
+      >
         <h2>문제 생성: {taskInfo ? taskInfo.title : "로딩 중..."}</h2>
-        {taskInfo && <p style={{ color: "#666" }}>Tag: {taskInfo.tag_name}</p>}
+        {taskInfo && <p style={{ color: "#666" }}>Tag: {taskInfo.task_tag_name}</p>}
       </div>
 
       {problems.length === 0 ? (
-        <div className="generate-section" style={{ textAlign: "center", padding: "40px", background: "#f9f9f9", borderRadius: "10px" }}>
+        <div
+          className="generate-section"
+          style={{
+            textAlign: "center",
+            padding: "40px",
+            background: "#f9f9f9",
+            borderRadius: "10px",
+          }}
+        >
           <p style={{ marginBottom: "20px", fontSize: "1.1em" }}>
-            AI가 <strong>{taskInfo?.title}</strong>의 핵심 내용을 바탕으로 진단 문제를 생성합니다.
+            AI가 <strong>{taskInfo?.title}</strong>의 핵심 내용을 바탕으로 진단
+            문제를 생성합니다.
           </p>
           <button
             className="generate-btn"
@@ -172,20 +197,56 @@ export default function ProblemGeneratePage() {
               cursor: isGenerating ? "not-allowed" : "pointer",
             }}
           >
-            {isGenerating ? "AI가 문제를 만드는 중입니다... (약 10~20초)" : "🚀 문제 생성하기"}
+            {isGenerating
+              ? "AI가 문제를 만드는 중입니다... (약 10~20초)"
+              : "🚀 문제 생성하기"}
           </button>
         </div>
       ) : (
         <div className="problem-list">
           {problems.map((problem, index) => (
-            <div key={problem.id} className="problem-item" style={{ marginBottom: "30px", padding: "20px", border: "1px solid #ddd", borderRadius: "8px" }}>
+            <div
+              key={problem.id}
+              className="problem-item"
+              style={{
+                marginBottom: "30px",
+                padding: "20px",
+                border: "1px solid #ddd",
+                borderRadius: "8px",
+              }}
+            >
               <h3 style={{ marginBottom: "15px" }}>문제 {index + 1}</h3>
-              <p className="question" style={{ fontSize: "1.1em", marginBottom: "20px", whiteSpace: "pre-wrap" }}>
+              <p
+                className="question"
+                style={{
+                  fontSize: "1.1em",
+                  marginBottom: "20px",
+                  whiteSpace: "pre-wrap",
+                }}
+              >
                 {problem.question}
               </p>
-              <div className="options" style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div
+                className="options"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                }}
+              >
                 {problem.options.map((option, optIndex) => (
-                  <label key={optIndex} className="option-label" style={{ padding: "10px", background: "#f5f5f5", borderRadius: "5px", cursor: "pointer", display: "flex", alignItems: "center" }}>
+                  <label
+                    key={optIndex}
+                    className="option-label"
+                    style={{
+                      padding: "10px",
+                      background: "#f5f5f5",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
                     <input
                       type="radio"
                       name={`problem-${problem.id}`}
@@ -200,19 +261,19 @@ export default function ProblemGeneratePage() {
               </div>
             </div>
           ))}
-          <button 
-            className="submit-btn" 
+          <button
+            className="submit-btn"
             onClick={handleSubmit}
             style={{
-                width: "100%",
-                padding: "15px",
-                backgroundColor: "#2196F3",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                fontSize: "1.2em",
-                cursor: "pointer",
-                marginTop: "20px"
+              width: "100%",
+              padding: "15px",
+              backgroundColor: "#2196F3",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              fontSize: "1.2em",
+              cursor: "pointer",
+              marginTop: "20px",
             }}
           >
             제출하기
