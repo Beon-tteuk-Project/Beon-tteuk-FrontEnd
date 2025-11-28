@@ -72,7 +72,7 @@ export default function TaskDetailPage() {
   return (
     <div className="task-detail-wrapper">
       <div className="task-detail-container">
-        <button className="back-btn" onClick={() => navigate(-1)}>
+        <button className="back-btn" onClick={() => navigate(`/subjects/${subjectId}`)}>
           &lt; 뒤로 가기
         </button>
 
