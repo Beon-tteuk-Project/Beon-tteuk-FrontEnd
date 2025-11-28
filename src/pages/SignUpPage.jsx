@@ -1,102 +1,108 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { signup as signupApi } from "../api/authApi";
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
-    username: "",
-    nickname: "",
+    userId: "",
+    userName: "",
     password: "",
     passwordConfirm: "",
-    email: "",
-    name: ""
+    userBirth: ""
   });
-  const [nicknameChecked, setNicknameChecked] = useState(false);
-  const { login } = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
-    if (field === "nickname") setNicknameChecked(false);
   };
 
-  const handleNicknameCheck = () => {
-    // 테스트용: 항상 사용 가능
-    alert("사용 가능한 닉네임입니다!");
-    setNicknameChecked(true);
-  };
+  const handleSignUp = async (e) => {
+    e?.preventDefault();
+    setError("");
 
-  const handleSignUp = () => {
-    if (!nicknameChecked) {
-      alert("닉네임 중복 확인을 해주세요.");
-      return;
-    }
+    // 유효성 검사
     if (formData.password !== formData.passwordConfirm) {
-      alert("비밀번호가 일치하지 않습니다.");
+      setError("비밀번호가 일치하지 않습니다.");
       return;
     }
 
-    // 테스트용: 바로 로그인 처리
-    const userData = {
-      id: Date.now(),
-      username: formData.username,
-      nickname: formData.nickname,
-      email: formData.email,
-      name: formData.name
-    };
+    if (!formData.userId || !formData.userName || !formData.password) {
+      setError("모든 필드를 입력해주세요.");
+      return;
+    }
 
-    login(userData);
-    navigate("/");
+    setLoading(true);
+
+    try {
+      // 백엔드 API 호출
+      await signupApi(
+        formData.userId,
+        formData.userName,
+        formData.password,
+        formData.userBirth || ""
+      );
+      
+      alert("회원가입이 완료되었습니다!");
+      navigate("/login");
+    } catch (err) {
+      setError(err.message || "회원가입에 실패했습니다.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="form-container">
       <div className="form-icon">👤</div>
       <h2>회원가입</h2>
-      <input
-        type="text"
-        placeholder="아이디"
-        value={formData.username}
-        onChange={(e) => handleChange("username", e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="이름"
-        value={formData.name}
-        onChange={(e) => handleChange("name", e.target.value)}
-      />
-      <div className="nickname-check">
+      <form onSubmit={handleSignUp}>
         <input
           type="text"
-          placeholder="닉네임"
-          value={formData.nickname}
-          onChange={(e) => handleChange("nickname", e.target.value)}
+          placeholder="아이디"
+          value={formData.userId}
+          onChange={(e) => handleChange("userId", e.target.value)}
+          required
+          disabled={loading}
         />
-        <button onClick={handleNicknameCheck}>중복 확인</button>
-      </div>
-      <input
-        type="password"
-        placeholder="비밀번호"
-        value={formData.password}
-        onChange={(e) => handleChange("password", e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="비밀번호 확인"
-        value={formData.passwordConfirm}
-        onChange={(e) => handleChange("passwordConfirm", e.target.value)}
-      />
-      <input
-        type="email"
-        placeholder="이메일"
-        value={formData.email}
-        onChange={(e) => handleChange("email", e.target.value)}
-      />
-      <div className="email-verification">
-        <input type="text" placeholder="인증코드" />
-        <button style={{ width: '120px' }}>코드 전송</button>
-      </div>
-      <button onClick={handleSignUp}>회원가입</button>
+        <input
+          type="text"
+          placeholder="이름"
+          value={formData.userName}
+          onChange={(e) => handleChange("userName", e.target.value)}
+          required
+          disabled={loading}
+        />
+        <input
+          type="password"
+          placeholder="비밀번호"
+          value={formData.password}
+          onChange={(e) => handleChange("password", e.target.value)}
+          required
+          disabled={loading}
+        />
+        <input
+          type="password"
+          placeholder="비밀번호 확인"
+          value={formData.passwordConfirm}
+          onChange={(e) => handleChange("passwordConfirm", e.target.value)}
+          required
+          disabled={loading}
+        />
+        <input
+          type="text"
+          placeholder="생년월일 (예: 1990-01-01)"
+          value={formData.userBirth}
+          onChange={(e) => handleChange("userBirth", e.target.value)}
+          disabled={loading}
+        />
+        {error && <div style={{ color: "red", fontSize: "14px" }}>{error}</div>}
+        <button type="submit" disabled={loading}>
+          {loading ? "가입 중..." : "회원가입"}
+        </button>
+      </form>
     </div>
   );
 }

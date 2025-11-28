@@ -147,7 +147,10 @@ export default function Home() {
           ) : (
             <p>아직 추가된 과목이 없습니다.</p>
           )}
-          <button className="add-subject-btn" onClick={() => setIsModalOpen(true)}>
+          <button
+            className="add-subject-btn"
+            onClick={() => setIsModalOpen(true)}
+          >
             + 새 과목 추가하기
           </button>
           <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
